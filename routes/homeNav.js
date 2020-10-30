@@ -3,13 +3,14 @@ import { createAppContainer } from 'react-navigation';
 import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import LoginAuth from "../screens/LoginAuth";
+import HomeScreen from "../screens/HomeScreen";
 
 
 const screens = {
   LoginScreen: {
     screen: LoginScreen,
     navigationOptions: {
-      title: 'Log in',
+      title: 'Authentication',
       headerStyle: {backgroundColor: '#eee'}
     }
 
@@ -24,11 +25,19 @@ const screens = {
   LoginAuth: {
     screen: LoginAuth,
     navigationOptions: {
-      title: 'Authentication',
+      title: 'Log In',
       headerStyle: {backgroundColor: '#eee'}
     }
 
   }, 
+  HomeScreen: {
+    screen: HomeScreen,
+    navigationOptions: {
+      title: 'Home',
+      headerStyle: {backgroundColor: '#eee'}
+    }
+
+  }
   
 };
 
