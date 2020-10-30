@@ -6,7 +6,7 @@ import LoginAuth from './LoginAuth';
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
-import HomeScreen from './HomeScreen';
+//import HomeScreen from './HomeScreen';
 
 //firebaseAuth.signOut();
 
@@ -35,14 +35,22 @@ var firebaseConfig = {
     // ...
   });
 }
+var user = firebase.auth().currentUser;
 
+if (user) {
+  console.log("signedin ig eus on home");
+  console.log(firebase.auth().currentUser.email);
+  
+} else {
+  console.log("logged out home???");
+}
   //createUser();
 //import { globalStyles } from '../styles/global';
 
 export default function Home({ navigation }) {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-      console.log("signed in!");
+      console.log("signed in! h");
       // User is signed in.
       var displayName = user.displayName;
       var email = user.email;
@@ -51,23 +59,15 @@ export default function Home({ navigation }) {
       var isAnonymous = user.isAnonymous;
       var uid = user.uid;
       var providerData = user.providerData;
-      goToHome();
+      //goToHome();
       // ...
     } else {
-      console.log("not logged in");
-      
+      console.log("not logged in h");
+      navigation.replace("LoginScreen");
     }
   });
 
-var user = firebase.auth().currentUser;
 
-if (user) {
-  console.log("signedin ig eus");
-  console.log(firebase.auth().currentUser.email);
-  
-} else {
-  console.log("logged out");
-}
   
   
 
@@ -91,11 +91,11 @@ if (user) {
     <View style={styles.container}>
         <StatusBar style={styles.statusBar} barStyle={'dark-content'}/>
         <Text> Hello, welcome to Urspace 1.0.2</Text>
-      <TouchableOpacity onPress={onPress}>
-      <Text style={styles.titleText}>Already a User?</Text>
-      </TouchableOpacity>
-      <Text></Text>
-      <Button title='Sign Up' onPress={pressHandler}/>
+        <TouchableOpacity
+        //onPress={firebaseAuth.signOut()}
+        >
+    <Text style={styles.button}>Sign out</Text>
+  </TouchableOpacity>
       
     </View>
     
@@ -125,6 +125,21 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: '#fff',
     
+
+  },
+  button: {
+    height: 40,
+    width: 100,
+    marginTop: 15,
+    borderColor: "#20232a",
+    backgroundColor: "#FFA500",
+    color: "#20232a",
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+    justifyContent:"center",
+    paddingTop: 6,
+    borderWidth:.1,
 
   },
 });

@@ -1,55 +1,130 @@
 // SignUp.js
-import React from 'react'
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
-export default class SignUp extends React.Component {
-  state = { email: '', password: '', errorMessage: null }
-handleSignUp = () => {
-  // TODO: Firebase stuff...
-  console.log('handleSignUp')
+import React, {useState, useEffect} from 'react';
+import { StyleSheet, View, Text, Button, StatusBar, TextInput, Image, TouchableOpacity, Alert} from 'react-native';
+//import firebase from '@react-native-firebase/app'
+import SignUpScreen from './SignUpScreen';
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
+import { Value } from 'react-native-reanimated';
+
+
+var firebaseConfig = {
+  apiKey: "AIzaSyC9iblodFlIVkj4mblQeFU6A7ponwCqj8o",
+  authDomain: "urspace-app.firebaseapp.com",
+  databaseURL: "https://urspace-app.firebaseio.com",
+  projectId: "urspace-app",
+  storageBucket: "urspace-app.appspot.com",
+  messagingSenderId: "903849438215",
+  appId: "1:903849438215:web:c6b8bb4038cb05b17dcea2",
+  measurementId: "G-Y8XND4WYXB"
+};
+// Initialize Firebase
+if (!firebase.apps.length) {
+firebase.initializeApp(firebaseConfig);
 }
-render() {
-    return (
-      <View style={styles.container}>
-        <Text>Sign Up</Text>
-        {this.state.errorMessage &&
-          <Text style={{ color: 'red' }}>
-            {this.state.errorMessage}
-          </Text>}
-        <TextInput
-          placeholder="Email"
-          autoCapitalize="none"
-          style={styles.textInput}
-          onChangeText={email => this.setState({ email })}
-          value={this.state.email}
-        />
-        <TextInput
-          secureTextEntry
-          placeholder="Password"
-          autoCapitalize="none"
-          style={styles.textInput}
-          onChangeText={password => this.setState({ password })}
-          value={this.state.password}
-        />
-        <Button title="Sign Up" onPress={this.handleSignUp} />
-        <Button
-          title="Already have an account? Login"
-          onPress={() => this.props.navigation.navigate('Login')}
-        />
-      </View>
-    )
+
+//var email = "davmartine12@gmail.com";
+//var password = "testingPassword"
+// uses existing user!!!             //          //    //     //
+
+
+
+//setEmail();
+// DB check    //
+
+function loginUser(email, password){
+
+  if(email.length > 3){
+    if(password.length > 5){
+      console.log(email, password, "ok");
+  firebase.auth().signInWithEmailAndPassword(email, password)
+  .catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    Alert.alert("Login Failed", errorMessage);
+    // ...
+  });
+    }
+    else{
+      Alert.alert("Incorrect Password or too short");
+    }
+  }else{
+    Alert.alert("Incorrect email or invalid email");
   }
+}
+
+
+export default function LoginAuth({navigation}){
+
+const[email, setEmail] = useState("");
+const[password, setPassword] = useState("");
+  
+function loginHandler(){
+  loginUser(email, password);
+}
+
+
+  return(
+    
+<View style={styles.container}>
+  <Text>Login</Text>
+  <Text> </Text>
+  <Text >Hi, what is your email?</Text>
+  
+  <TextInput style={styles.textInput}
+    autoCapitalize="none"
+    placeholder={"e.g. janedoe@gmail.com"} 
+    onChangeText={email => setEmail(email)}/>
+  <Text> </Text>
+  <Text>Password </Text>
+  <TextInput style={styles.textInput} 
+    secureTextEntry
+    autoCapitalize="none"
+    placeholder={"use alphanumeric characters only"} 
+    onChangeText={password => setPassword(password)}/>
+  <Text>TESTING FEATURE ONLY - email: {email} , pw: {password}</Text>
+  <Text> </Text>
+  <TouchableOpacity
+   onPress={loginHandler}>
+    <Text style={styles.button}>Login</Text>
+  </TouchableOpacity>
+  
+</View>
+
+  );
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+    //justifyContent: 'center',
+    marginTop: 100,
+    alignItems: 'center',
+    fontSize: 16,
   },
   textInput: {
     height: 40,
     width: '90%',
     borderColor: 'gray',
-    borderWidth: 1,
-    marginTop: 8
-  }
+    borderWidth: 2,
+    marginTop: 10,
+    fontSize: 20,
+
+  },
+  button: {
+    height: 40,
+    width: 100,
+    marginTop: 15,
+    borderColor: "#20232a",
+    backgroundColor: "#FFA500",
+    color: "#20232a",
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+    justifyContent:"center",
+    paddingTop: 6,
+    borderWidth:.1,
+
+  },
 })
