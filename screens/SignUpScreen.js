@@ -10,14 +10,8 @@ import { Value } from 'react-native-reanimated';
 
 
 var firebaseConfig = {
-  apiKey: "AIzaSyC9iblodFlIVkj4mblQeFU6A7ponwCqj8o",
-  authDomain: "urspace-app.firebaseapp.com",
-  databaseURL: "https://urspace-app.firebaseio.com",
-  projectId: "urspace-app",
-  storageBucket: "urspace-app.appspot.com",
-  messagingSenderId: "903849438215",
-  appId: "1:903849438215:web:c6b8bb4038cb05b17dcea2",
-  measurementId: "G-Y8XND4WYXB"
+  //IGNORE  //
+    // KEY IS HIDDEN FOR SECURITY //
 };
 // Initialize Firebase
 if (!firebase.apps.length) {
